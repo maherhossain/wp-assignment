@@ -1,5 +1,10 @@
 <?php
 
+
+if( file_exists( dirname( __FILE__ ) . '/shortcode/shortcodes.php' ) ) {
+	require_once( dirname( __FILE__ ) . '/shortcode/shortcodes.php' );
+}
+
 add_action( 'wp_enqueue_scripts', 'unite_child_enqueue_styles' );
 function unite_child_enqueue_styles() {
     wp_enqueue_style( 'unite-style', get_template_directory_uri() . '/style.css' );
@@ -172,50 +177,5 @@ add_filter( 'excerpt_length', 'unite_custom_excerpt_length', 999 );
 
 
 
-
-
-
-
-
-// Short for displaying last 5 films
-add_shortcode('films', 'unite_film_scode');
-function unite_film_scode($attr, $content){
-	$attributes = extract(shortcode_atts(
-		array(
-			'title' => 'Films',
-		),
-		$attr
-	));
-
-	ob_start();
-	?>
-
-	<section id="films">	
-		<?php 
-        $films = new WP_Query(array(
-          'post_type'		=>'films',
-          'orderby' 		=> 'date',
-          'order' 			=> 'DESC',
-          'posts_per_page'  	=> 5
-        ));
-
-        while($films->have_posts()) : $films->the_post(); ?>
-
-			<div class="media">
-			  <div class="media-left" style="width: 25%;">
-			    <a href="#">
-			      <?php the_post_thumbnail(); ?>
-			    </a>
-			  </div>
-			  <div class="media-body">
-			    <h4 class="media-heading"><?php the_title(); ?></h4>
-			    <p><?php the_excerpt(); ?></p>
-			  </div>
-			</div>
-
-          <?php endwhile; ?>
-    </section>
-
-<?php return ob_get_clean();  } ?>
 
 

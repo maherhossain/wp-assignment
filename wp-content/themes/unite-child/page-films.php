@@ -1,12 +1,14 @@
-<?php get_header(); ?>
+<?php 
+/* Template Name: Films Page Template */
+get_header(); ?>
 
 
 		<?php 
         $films = new WP_Query(array(
-          'post_type' =>'films',
-                  'orderby' => 'date',
-                  'order' => 'ASC',
-                  'posts_per_page' => -1
+  		  'post_type' =>'films',
+          'orderby' => 'date',
+          'order' => 'ASC',
+          'posts_per_page' => -1
         ));
 
         while($films->have_posts()) : $films->the_post(); ?>
@@ -41,5 +43,6 @@
 
 
 
-    
+
+
  
